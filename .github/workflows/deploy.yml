@@ -1,0 +1,32 @@
+name: Deploy Hexo Site
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 如果使用 Git 子模块管理主题需开启
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # Hexo 支持 Node.js 18+
+
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static files
+        run: hexo generate
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public  # Hexo 默认输出目录
