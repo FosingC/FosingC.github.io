@@ -109,4 +109,3 @@ deploy:
   repo: https://github.com/fosingc/fosingc.github.io.git
   branch: master
 
-repository: fosingc/fosingc.github.io
